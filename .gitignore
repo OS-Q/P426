@@ -12,6 +12,4 @@ examples/**/*.md
 **/CONTR*
 **/CHANGE*
 .gitmodules
-spl.py
-mxchip.py
 README

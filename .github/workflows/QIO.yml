@@ -1,16 +1,15 @@
-name: PIO
+name: QIO
 
 on:
   push:
     branches:
-      - pio
+      - qio
     paths:
       - 'boards/**'
-      - 'builder/**'
-      - 'make/**'
+      - 'extend/**'
       - 'examples/**'
-      - 'platform.json'
-      - 'platform.py'
+      - '**.json'
+      - '**.py'
 
 jobs:
   CodeCheck:
@@ -78,6 +77,7 @@ jobs:
           - "twr-switch"
           - "twr-ultrasound"
           - "twr-usb-sensors"
+
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -94,11 +94,12 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
-          pip install -U https://github.com/platformio/platformio/archive/develop.zip
-          pio platform install https://github.com/OS-Q/P42/archive/pio.zip
+          pip install -U https://github.com/OS-Q/M03/releases/latest/download/qio.zip
+          pio platform install https://github.com/OS-Q/P42/archive/qio.zip
 
       - name: Build examples
         working-directory: examples
         run: |
           pio run -d ${{ matrix.example }}
+
 
