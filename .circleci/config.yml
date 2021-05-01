@@ -1,0 +1,95 @@
+version: 2
+jobs:
+
+  QIO:
+    docker:
+      - image: python:3
+    steps:
+      - checkout
+      - run:
+          name: "Install"
+          command: |
+            apt update
+            apt install -y git
+            git submodule update --init --recursive
+            python -m pip install --upgrade pip
+            pip install -U https://github.com/OS-Q/M03/releases/latest/download/qio.zip
+            pio platform install file://.
+      - run:
+          name: "Build"
+          command: |
+            pio run -d examples/twr-button
+            pio run -d examples/twr-climate-module
+            pio run -d examples/twr-ds18b20-multiple
+            pio run -d examples/twr-ds18b20-single
+            pio run -d examples/twr-gps-module
+            pio run -d examples/twr-infrared-receiver
+            pio run -d examples/twr-lcd-text
+            pio run -d examples/twr-led-on-off
+            pio run -d examples/twr-led-strip
+            pio run -d examples/twr-log
+            pio run -d examples/twr-lux-meter-tag
+            pio run -d examples/twr-nfc-tag
+            pio run -d examples/twr-onewire-i2c
+            pio run -d examples/twr-onewire-relay
+            pio run -d examples/twr-onewire-search
+            pio run -d examples/twr-pir-module
+            pio run -d examples/twr-radio-base
+            pio run -d examples/twr-radio-remote
+            pio run -d examples/twr-scheduler-advanced
+            pio run -d examples/twr-scheduler-basics
+            pio run -d examples/twr-sigfox
+            pio run -d examples/twr-skeleton
+            pio run -d examples/twr-switch
+            pio run -d examples/twr-ultrasound
+            pio run -d examples/twr-usb-sensors
+
+  PIO:
+    docker:
+      - image: python:3
+    steps:
+      - checkout
+      - run:
+          name: "Install"
+          command: |
+            apt update
+            apt install -y git
+            git submodule update --init --recursive
+            python -m pip install --upgrade pip
+            pip install -U https://github.com/platformio/platformio/archive/develop.zip
+            pio platform install file://.
+      - run:
+          name: "Build"
+          command: |
+            pio run -d examples/twr-button
+            pio run -d examples/twr-climate-module
+            pio run -d examples/twr-ds18b20-multiple
+            pio run -d examples/twr-ds18b20-single
+            pio run -d examples/twr-gps-module
+            pio run -d examples/twr-infrared-receiver
+            pio run -d examples/twr-lcd-text
+            pio run -d examples/twr-led-on-off
+            pio run -d examples/twr-led-strip
+            pio run -d examples/twr-log
+            pio run -d examples/twr-lux-meter-tag
+            pio run -d examples/twr-nfc-tag
+            pio run -d examples/twr-onewire-i2c
+            pio run -d examples/twr-onewire-relay
+            pio run -d examples/twr-onewire-search
+            pio run -d examples/twr-pir-module
+            pio run -d examples/twr-radio-base
+            pio run -d examples/twr-radio-remote
+            pio run -d examples/twr-scheduler-advanced
+            pio run -d examples/twr-scheduler-basics
+            pio run -d examples/twr-sigfox
+            pio run -d examples/twr-skeleton
+            pio run -d examples/twr-switch
+            pio run -d examples/twr-ultrasound
+            pio run -d examples/twr-usb-sensors
+workflows:
+    version: 2
+    run_ci:
+        jobs:
+          - QIO
+          - PIO
+
